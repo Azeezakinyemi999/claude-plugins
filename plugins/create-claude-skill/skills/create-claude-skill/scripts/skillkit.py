@@ -13,7 +13,9 @@ Commands
   config [--set PATH]               show, or save, the marketplace folder
   init PATH --name N --owner O      create a new, empty marketplace folder
   list                              plugins, versions and their skills
-  new NAME --description D          add plugins/NAME (skeleton, or --from DIR)
+  new NAME --description D          add plugins/NAME (skeleton, or --from DIR;
+                                    --skill S names the skill folder)
+  add-skill NAME --from DIR         add another skill folder to plugin NAME
   bump NAME [patch|minor|major]     raise the version in both manifests
   check [NAME ...]                  lint plugins, then `claude plugin validate`
   test-install NAME                 install into a throwaway CLAUDE_CONFIG_DIR
@@ -237,7 +239,7 @@ def cmd_list(args):
         print(f'  {e["name"]:<28} {e.get("version", "?"):<9} skills: {skills}')
 
 
-def _readme_add_row(m: Market, name: str, desc: str):
+def _readme_add_row(m: Market, name: str, desc: str, link: str = None):
     readme = m.root / 'README.md'
     if not readme.exists():
         print('  README.md: none, skipped')
@@ -254,7 +256,8 @@ def _readme_add_row(m: Market, name: str, desc: str):
     while end < len(lines) and lines[end].startswith('|'):
         end += 1
     first = re.split(r'(?<=[.!?])\s', desc.strip(), maxsplit=1)[0]
-    lines.insert(end, f'| [{name}](plugins/{name}/skills/{name}/SKILL.md) | {first} |')
+    link = link or f'plugins/{name}/skills/{name}/SKILL.md'
+    lines.insert(end, f'| [{name}]({link}) | {first} |')
     readme.write_text('\n'.join(lines), encoding='utf-8')
     print('  README.md: added a row to the plugin table')
 
@@ -269,21 +272,17 @@ def cmd_new(args):
     pdir = m.root / 'plugins' / name
     if pdir.exists():
         die(f'{pdir} already exists')
-    sdir = pdir / 'skills' / name
+    skill = args.skill or name
+    if not NAME_RE.match(skill) or len(skill) > 64:
+        die(f'skill name {skill!r} must be kebab-case, at most 64 characters')
+    sdir = pdir / 'skills' / skill
     if args.source:
-        src = Path(args.source).expanduser().resolve()
-        if not (src / 'SKILL.md').exists():
-            die(f'{src} has no SKILL.md')
-        fm = frontmatter(src / 'SKILL.md') or {}
-        if fm.get('name') != name:
-            print(f'  warning: SKILL.md frontmatter name is {fm.get("name")!r}, not {name!r}; fix it')
-        shutil.copytree(src, sdir, ignore=IGNORE)
-        print(f'  copied {src} -> {sdir}')
+        _copy_skill(args.source, sdir)
     else:
         sdir.mkdir(parents=True)
         (sdir / 'SKILL.md').write_text(SKELETON.format(
-            name=name, description=args.description,
-            title=name.replace('-', ' ').capitalize()), encoding='utf-8')
+            name=skill, description=args.description,
+            title=skill.replace('-', ' ').capitalize()), encoding='utf-8')
         print(f'  wrote skeleton {sdir / "SKILL.md"}')
     owner = (m.data.get('owner') or {}).get('name')
     author = {'name': args.author or owner} if (args.author or owner) else None
@@ -310,8 +309,36 @@ def cmd_new(args):
     m.data.setdefault('plugins', []).append(entry)
     m.save()
     print(f'  registered {name} {args.version} in {m.manifest.relative_to(m.root)}')
-    _readme_add_row(m, name, args.description)
+    _readme_add_row(m, name, args.description,
+                    None if skill == name else f'plugins/{name}/')
     print(f'next: write the skill in {sdir}, then `skillkit.py check {name}`')
+
+
+def _copy_skill(source, sdir: Path):
+    src = Path(source).expanduser().resolve()
+    if not (src / 'SKILL.md').exists():
+        die(f'{src} has no SKILL.md')
+    if sdir.exists():
+        die(f'{sdir} already exists')
+    fm = frontmatter(src / 'SKILL.md') or {}
+    if fm.get('name') != sdir.name:
+        print(f'  warning: SKILL.md frontmatter name is {fm.get("name")!r}, not {sdir.name!r}; fix it')
+    shutil.copytree(src, sdir, ignore=IGNORE)
+    print(f'  copied {src} -> {sdir}')
+
+
+def cmd_add_skill(args):
+    """Add a second (third, ...) skill to an existing plugin, for skills that form one workflow."""
+    m = market(args)
+    if not m.entry(args.name):
+        die(f'{args.name!r} is not in the marketplace; create it with `new` first')
+    src = Path(args.source).expanduser().resolve()
+    skill = args.skill or src.name
+    if not NAME_RE.match(skill) or len(skill) > 64:
+        die(f'skill name {skill!r} must be kebab-case, at most 64 characters')
+    _copy_skill(src, m.plugin_dir(args.name) / 'skills' / skill)
+    print(f'next: `skillkit.py check {args.name}`; if {args.name} is already published, '
+          f'`skillkit.py bump {args.name} minor`')
 
 
 def _bump(v, part):
@@ -547,10 +574,17 @@ def main(argv=None):
     p.add_argument('name')
     p.add_argument('--description', required=True, help='what it does + "Use when ..." (max 1024 chars)')
     p.add_argument('--from', dest='source', metavar='DIR', help='copy an existing skill folder instead of a skeleton')
+    p.add_argument('--skill', metavar='S', help='skill folder name, if different from the plugin name')
     p.add_argument('--author', help='defaults to the marketplace owner')
     p.add_argument('--version', default='1.0.0')
     p.add_argument('--keywords', nargs='*')
     p.set_defaults(fn=cmd_new)
+
+    p = sub.add_parser('add-skill', help='add another skill folder to an existing plugin')
+    p.add_argument('name', help='the plugin')
+    p.add_argument('--from', dest='source', metavar='DIR', required=True, help='the skill folder to copy')
+    p.add_argument('--skill', metavar='S', help='skill folder name (default: the source folder name)')
+    p.set_defaults(fn=cmd_add_skill)
 
     p = sub.add_parser('bump', help='raise a plugin version in plugin.json and marketplace.json')
     p.add_argument('name')

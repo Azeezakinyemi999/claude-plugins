@@ -130,6 +130,11 @@ may never reach users.
 
 - One skill per plugin, with the same name for both, so the command reads
   `/name:name`.
+- **Exception:** skills that form one workflow and share a record (for
+  example, evaluate an idea and then plan it) go in **one plugin**, named for
+  the workflow. Each skill keeps its own folder, and any shared reference is
+  copied into each skill and kept identical. Users install once and call
+  `/plugin:skill`.
 - Use a verb-noun or a noun phrase that says what it does
   (`technical-debt`, `create-claude-skill`). Avoid generic names that collide
   (`helper`, `tools`).

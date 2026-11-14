@@ -1,0 +1,18 @@
+{
+  "name": "idea-to-market",
+  "version": "1.0.0",
+  "description": "Evaluate an idea with four due-diligence checks and a one-page decision memo, then plan commercialization (MVP, customer validation, go-to-market, operational readiness) only after the team approves. Two skills share one versioned handoff: /idea-due-diligence and /idea-commercialization.",
+  "author": {
+    "name": "Azeez Akinyemi"
+  },
+  "homepage": "https://github.com/Azeezakinyemi999/claude-plugins",
+  "repository": "https://github.com/Azeezakinyemi999/claude-plugins",
+  "license": "MIT",
+  "keywords": [
+    "due-diligence",
+    "commercialization",
+    "business-validation",
+    "stage-gate",
+    "customer-discovery"
+  ]
+}

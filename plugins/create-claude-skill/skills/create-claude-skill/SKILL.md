@@ -101,7 +101,12 @@ For **Update**: read the current skill and ask only what changes. For
      both manifests and a README row.
    - Import: `skillkit.py new NAME --description "…" --from DIR`, which
      copies the folder.
-   - Update: edit the files under `plugins/NAME/skills/NAME/` in place.
+   - **Several skills that form one workflow** (for example, evaluate then
+     plan): one plugin holds all of them. Run `skillkit.py new PLUGIN
+     --description "…" --skill FIRST [--from DIR]`, then
+     `skillkit.py add-skill PLUGIN --from DIR2`. Their commands become
+     `/PLUGIN:FIRST` and so on (`/FIRST` here, via the link).
+   - Update: edit the files under `plugins/NAME/skills/<skill>/` in place.
 2. Write the description (≤ 1024 characters): what it does, then
    "Use when …" with the trigger words. It is all Claude sees before
    choosing the skill.

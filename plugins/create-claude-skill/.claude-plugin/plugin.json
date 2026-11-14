@@ -1,6 +1,6 @@
 {
   "name": "create-claude-skill",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Create, update and publish Claude Code skills end to end: write a portable skill, package it in your plugin marketplace, lint and validate it, test-install it, link it for local use, and push only after you say yes.",
   "author": {
     "name": "Azeez Akinyemi"

@@ -7,6 +7,7 @@ building more skills like them.
 | --- | --- |
 | [technical-debt](plugins/technical-debt/skills/technical-debt/SKILL.md) | Read-only audit of a git repo for abandoned threads: code, parameters, config keys, notebook cells and files that were planned or once used, then dropped, but still exist. |
 | [create-claude-skill](plugins/create-claude-skill/skills/create-claude-skill/SKILL.md) | Create, update and publish Claude Code skills end to end: write a portable skill, package it in your plugin marketplace, lint and validate it, test-install it, link it for local use, and push only after you say yes. |
+| [idea-to-market](plugins/idea-to-market/) | Evaluate an idea with four due-diligence checks and a one-page decision memo, then plan commercialization (MVP, customer validation, go-to-market, operational readiness) only after the team approves. |
 
 ## Install
 
@@ -29,11 +30,54 @@ claude plugin install technical-debt@research-tools
 claude plugin install create-claude-skill@research-tools
 ```
 
+```bash
+claude plugin install idea-to-market@research-tools
+```
+
 Inside a `claude` session the same commands are `/plugin marketplace add …`
 and `/plugin install …`. Restart Claude Code after installing.
 
 Plugin skills are called as `/<plugin>:<skill>`, e.g.
 `/technical-debt:technical-debt`, or just ask for the task in plain words.
+
+## idea-to-market
+
+Two skills for deciding on, and then developing, an idea: software, a
+physical product, a service or a funded initiative. They share one
+versioned handoff record.
+
+**`/idea-to-market:idea-due-diligence`.** Give it a paragraph and any
+materials, e.g. *"Evaluate this idea for a small pilot. Here is our
+one-paragraph description and customer evidence."*
+
+- Builds a business brief and runs four checks: customer problem, market
+  opportunity, strategic fit, feasibility and economics.
+- Writes `ideas/<idea>/report.md`. A one-page decision memo leads it, with
+  one of five recommendations: Advance, Test further, Reshape, Hold or Stop.
+- Also writes an evidence log with qualitative strength and reasons, test
+  cards, and `handoff.md`.
+- The handoff stays **pending** until the team explicitly approves a defined
+  commitment.
+- Answers follow-ups, compares "what if" scenarios without touching the
+  approved record, and versions the handoff when evidence changes.
+- Says which research paths ran: public research, configured read-only
+  data access, or supplied evidence. It never invents numbers.
+
+**`/idea-to-market:idea-commercialization`.** This one runs only when you
+invoke it, e.g. *"Use this approved handoff to plan the capped paid pilot and
+define what would justify a limited launch."*
+
+- Reads the latest handoff and **stops** unless an approved commitment
+  exists.
+- Then plans a roadmap across MVP, customer validation, go-to-market and
+  operational readiness, plus a detailed plan for the approved next step,
+  with a fresh gate before any launch.
+- It plans only. It never launches, contacts customers, spends money or
+  publishes.
+
+Optional live data: connect a read-only MCP server with `claude mcp add`
+(see [sources.md](plugins/idea-to-market/skills/idea-due-diligence/references/sources.md)).
+The skills work with public research and supplied files alone.
 
 ## technical-debt
 

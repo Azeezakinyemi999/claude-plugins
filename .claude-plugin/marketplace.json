@@ -29,7 +29,7 @@
       "name": "create-claude-skill",
       "source": "./plugins/create-claude-skill",
       "description": "Create, update and publish Claude Code skills end to end: write a portable skill, package it in your plugin marketplace, lint and validate it, test-install it, link it for local use, and push only after you say yes.",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "author": {
         "name": "Azeez Akinyemi"
       },
@@ -41,6 +41,23 @@
         "claude-code"
       ],
       "category": "development"
+    },
+    {
+      "name": "idea-to-market",
+      "source": "./plugins/idea-to-market",
+      "description": "Evaluate an idea with four due-diligence checks and a one-page decision memo, then plan commercialization (MVP, customer validation, go-to-market, operational readiness) only after the team approves. Two skills share one versioned handoff: /idea-due-diligence and /idea-commercialization.",
+      "version": "1.0.0",
+      "author": {
+        "name": "Azeez Akinyemi"
+      },
+      "keywords": [
+        "due-diligence",
+        "commercialization",
+        "business-validation",
+        "stage-gate",
+        "customer-discovery"
+      ],
+      "category": "business"
     }
   ]
 }
