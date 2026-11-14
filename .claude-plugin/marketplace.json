@@ -1,0 +1,23 @@
+{
+  "name": "research-tools",
+  "owner": {
+    "name": "Azeez Akinyemi"
+  },
+  "metadata": {
+    "description": "Claude Code plugins for auditing and maintaining research codebases.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "technical-debt",
+      "source": "./plugins/technical-debt",
+      "description": "Read-only, multi-agent audit of any git repo for abandoned code, parameters, config keys, notebook cells and files. Writes a register with DELETE / KEEP / DECIDE recommendations and a blank Decision column; never edits code.",
+      "version": "1.0.0",
+      "author": {
+        "name": "Azeez Akinyemi"
+      },
+      "keywords": ["technical-debt", "dead-code", "audit", "refactoring", "research-software"],
+      "category": "development"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "name": "technical-debt",
+  "version": "1.0.0",
+  "description": "Read-only, multi-agent audit of any git repo for abandoned code, parameters, config keys, notebook cells and files. Writes a register with DELETE / KEEP / DECIDE recommendations and a blank Decision column; never edits code.",
+  "author": {
+    "name": "Azeez Akinyemi"
+  },
+  "homepage": "https://github.com/Azeezakinyemi999/claude-plugins",
+  "repository": "https://github.com/Azeezakinyemi999/claude-plugins",
+  "license": "MIT",
+  "keywords": ["technical-debt", "dead-code", "audit", "refactoring", "research-software"]
+}
