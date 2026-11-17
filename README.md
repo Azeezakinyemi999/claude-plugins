@@ -8,6 +8,7 @@ building more skills like them.
 | [technical-debt](plugins/technical-debt/skills/technical-debt/SKILL.md) | Read-only audit of a git repo for abandoned threads: code, parameters, config keys, notebook cells and files that were planned or once used, then dropped, but still exist. |
 | [create-claude-skill](plugins/create-claude-skill/skills/create-claude-skill/SKILL.md) | Create, update and publish Claude Code skills end to end: write a portable skill, package it in your plugin marketplace, lint and validate it, test-install it, link it for local use, and push only after you say yes. |
 | [idea-to-market](plugins/idea-to-market/) | Evaluate an idea with four due-diligence checks and a one-page decision memo, then plan commercialization (MVP, customer validation, go-to-market, operational readiness) only after the team approves. |
+| [learning-strategy](plugins/learning-strategy/skills/learning-strategy/SKILL.md) | Tutors you through learning any topic with ten study strategies (ELI5, 80/20, mind map, schematic, first principles, Socratic questioning, Feynman technique, visual study guide, quiz me, sticky notes), one at a time or as a ten-step sequence that ends in spaced review. |
 
 ## Install
 
@@ -32,6 +33,10 @@ claude plugin install create-claude-skill@research-tools
 
 ```bash
 claude plugin install idea-to-market@research-tools
+```
+
+```bash
+claude plugin install learning-strategy@research-tools
 ```
 
 Inside a `claude` session the same commands are `/plugin marketplace add …`
@@ -132,6 +137,33 @@ one for you, and remembers it in `~/.claude/create-claude-skill.json`.
 
 Its helper, `scripts/skillkit.py` (standard library only), does the
 mechanical steps and can be run by hand: `python3 skillkit.py -h`.
+
+## learning-strategy
+
+Run `/learning-strategy:learning-strategy`, or just ask: *"explain diffusion
+like I'm five"*, *"quiz me on Fick's law"*, *"help me learn transient
+diffusion step by step"*, *"review my sticky notes"*.
+
+**One strategy, or all ten in order.** ELI5 → 80/20 → mind map → schematic →
+first principles → Socratic questioning → Feynman technique → visual study
+guide → quiz me → sticky notes. Each step produces something the next one
+uses, and the skill pauses after every step.
+
+- In quizzes, teach-backs and Socratic rounds it asks **one question at a
+  time** and waits for your answer before correcting you.
+- The quiz sends each miss back to the right step: forgot it → sticky note;
+  couldn't say why → first principles; couldn't explain it clearly → teach it
+  back again.
+- It flags anything it isn't sure of as `UNSURE` rather than guessing.
+
+**What it saves.** Only after you say yes, and only in
+`learning/<topic>/` in the current folder: `progress.md`, `notes.md`,
+`study-guide.html` and `sticky-notes.csv`. Say no and it stays in the chat.
+"Continue learning <topic>" picks up where you stopped.
+
+**Spaced review.** Its helper, `scripts/sticky_notes.py` (standard library
+only), schedules each note 1 → 3 → 7 → 14 → 30 → 60 days out, sends a missed
+note back to tomorrow, and keeps answers hidden until you've answered.
 
 ## Update
 

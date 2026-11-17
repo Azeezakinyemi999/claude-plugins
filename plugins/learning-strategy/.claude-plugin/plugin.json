@@ -1,0 +1,18 @@
+{
+  "name": "learning-strategy",
+  "version": "1.0.0",
+  "description": "Tutors you through learning any topic with ten study strategies (ELI5, 80/20, mind map, schematic, first principles, Socratic questioning, Feynman technique, visual study guide, quiz me, sticky notes), one at a time or as a ten-step sequence that ends in spaced review. Asks one question at a time and saves notes only in learning/<topic>/ after you say yes.",
+  "author": {
+    "name": "Azeez Akinyemi"
+  },
+  "homepage": "https://github.com/Azeezakinyemi999/claude-plugins",
+  "repository": "https://github.com/Azeezakinyemi999/claude-plugins",
+  "license": "MIT",
+  "keywords": [
+    "learning",
+    "study-strategies",
+    "tutoring",
+    "retrieval-practice",
+    "feynman-technique"
+  ]
+}

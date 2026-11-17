@@ -58,6 +58,23 @@
         "customer-discovery"
       ],
       "category": "business"
+    },
+    {
+      "name": "learning-strategy",
+      "source": "./plugins/learning-strategy",
+      "description": "Tutors you through learning any topic with ten study strategies (ELI5, 80/20, mind map, schematic, first principles, Socratic questioning, Feynman technique, visual study guide, quiz me, sticky notes), one at a time or as a ten-step sequence that ends in spaced review. Asks one question at a time and saves notes only in learning/<topic>/ after you say yes.",
+      "version": "1.0.0",
+      "author": {
+        "name": "Azeez Akinyemi"
+      },
+      "keywords": [
+        "learning",
+        "study-strategies",
+        "tutoring",
+        "retrieval-practice",
+        "feynman-technique"
+      ],
+      "category": "education"
     }
   ]
 }
