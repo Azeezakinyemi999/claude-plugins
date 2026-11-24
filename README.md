@@ -9,6 +9,7 @@ building more skills like them.
 | [create-claude-skill](plugins/create-claude-skill/skills/create-claude-skill/SKILL.md) | Create, update and publish Claude Code skills end to end: write a portable skill, package it in your plugin marketplace, lint and validate it, test-install it, link it for local use, and push only after you say yes. |
 | [idea-to-market](plugins/idea-to-market/) | Evaluate an idea with four due-diligence checks and a one-page decision memo, then plan commercialization (MVP, customer validation, go-to-market, operational readiness) only after the team approves. |
 | [learning-strategy](plugins/learning-strategy/skills/learning-strategy/SKILL.md) | Tutors you through learning any topic with ten study strategies (ELI5, 80/20, mind map, schematic, first principles, Socratic questioning, Feynman technique, visual study guide, quiz me, sticky notes), one at a time or as a ten-step sequence that ends in spaced review. |
+| [research-plots](plugins/research-plots/skills/research-plots/SKILL.md) | House style for every data figure: white background, black text, thick black frame and lines, large fonts, a few colour-blind-safe Okabe-Ito colours that keep one meaning across a project, labels next to the data instead of legends, real data only, and PDF plus 600 dpi PNG at final print size. |
 
 ## Install
 

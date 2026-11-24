@@ -1,0 +1,20 @@
+{
+  "name": "research-plots",
+  "version": "1.0.0",
+  "description": "House style for every data figure: white background, black text, thick black frame and lines, large fonts, a few colour-blind-safe Okabe-Ito colours that keep one meaning across a project, labels next to the data instead of legends, real data only, and PDF plus 600 dpi PNG at final print size. Ships a matplotlib style module and a checker for finished figures. Use when making, restyling, fixing or reviewing any plot, chart or figure, in matplotlib, pgfplots, plotly or PowerPoint, for a paper, slides, a poster or a report.",
+  "author": {
+    "name": "Azeez Akinyemi"
+  },
+  "homepage": "https://github.com/Azeezakinyemi999/claude-plugins",
+  "repository": "https://github.com/Azeezakinyemi999/claude-plugins",
+  "license": "MIT",
+  "keywords": [
+    "plotting",
+    "figures",
+    "matplotlib",
+    "pgfplots",
+    "publication-quality",
+    "data-visualization",
+    "okabe-ito"
+  ]
+}
